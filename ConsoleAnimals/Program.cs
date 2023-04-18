@@ -5,45 +5,32 @@ class Program
 {
     static void Main(string[] args)
     {
-        IList<Chien> chiens = new List<Chien>();
+        Chien dragon = new Chien();
+        dragon.ID = 1;
+        dragon.Rarity = "Rare";
+        dragon.Name = "Ety";
 
-        chiens.Add(new Chien()
-        {
-            Name = "Snow",
-        });
+        Chien griffon= new Chien();
+        griffon.ID = 2;
+        griffon.Rarity = "Epique";
+        griffon.Name = "Eva";
 
-        chiens.Add(new Chien()
-        {
-            Name = "Ety",
-        });
+        Chien chien = new Chien();
+        chien.ID = 3;
+        chien.Rarity = "Commun";
+        chien.Name = "Toutou";
 
-        chiens.Add(new Chien()
-        {
-            Name = "Beethoven",
-        });
+        Chien Beethoven = new Chien();
+        chien.ID = 4;
+        chien.Rarity = "Rare";
+        chien.Name = "Beethoven";
 
-        chiens.Add(new Chien()
-        {
-            Name = "Eva",
-        });
+        IList<Chien> animallist = new List<Chien>() { 
+            dragon, griffon, chien, Beethoven
+        };
 
-        chiens.Add(new Chien()
-        {
-            Name = "Bill",
-        });
-        IEnumerable<Chien> ListeChiens = 
-            from chien in chiens
-            where chien.Name != "Snow"
-            select chien;
+        var result = animallist.Where(item => item.Rarity == "Rare").ToList();
 
-        foreach (Chien chien1 in ListeChiens)
-        {
-            Console.WriteLine(chien1.Name);
-        }
-
-        foreach (Chien item in chiens)
-        {
-            if (item.Name != "Snow") { Console.WriteLine(item.Name); }
-        }
+        Console.WriteLine(result);
     }
 }

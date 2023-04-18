@@ -10,6 +10,10 @@ namespace ConsoleAnimals.Models
     {
         public string Name { get; private set; }
 
+        public int ID { get; set; }
+
+        public string Rarity { get; set; }
+
         public Animal() { }
 
         public Animal(string name) { Name = name; }
