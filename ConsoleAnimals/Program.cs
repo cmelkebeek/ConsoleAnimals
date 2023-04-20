@@ -1,36 +1,67 @@
 ﻿using ConsoleAnimals.Models;
-using ConsoleAnimals.Interface;
+using System.Data.SqlClient;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Chien dragon = new Chien();
-        dragon.ID = 1;
-        dragon.Rarity = "Rare";
-        dragon.Name = "Ety";
+        Program program = new Program();
 
-        Chien griffon= new Chien();
-        griffon.ID = 2;
-        griffon.Rarity = "Epique";
-        griffon.Name = "Eva";
+        //Bdd animal = new Bdd();
 
-        Chien chien = new Chien();
-        chien.ID = 3;
-        chien.Rarity = "Commun";
-        chien.Name = "Toutou";
+        string result;
 
-        Chien Beethoven = new Chien();
-        chien.ID = 4;
-        chien.Rarity = "Rare";
-        chien.Name = "Beethoven";
+        do
+        {
+            Console.WriteLine("Veuillez choisir un type d'animal (Aigle, Chien, Dragon, Griffin)");
+            result = Console.ReadLine();
+        } while (result.ToLower() != "aigle" || result.ToLower() != "chien" || result.ToLower() != "dragon" || result.ToLower() != "griffin");
 
-        IList<Chien> animallist = new List<Chien>() { 
-            dragon, griffon, chien, Beethoven
-        };
+        
 
-        var result = animallist.Where(item => item.Rarity == "Rare").ToList();
 
-        Console.WriteLine(result);
+        // program.InsertData(animal);
+
+        program.RecupData();
+    }
+
+
+    public void InsertData(Bdd bdd)
+    {
+        
+        SqlConnection conn = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=Cours;User ID=Admin;Integrated Security=True;");
+
+        conn.Open();
+
+        string query = $"INSERT INTO Animals (Type, Name, Rarity) VALUES ('{bdd.Type}', '{bdd.Name}', '{bdd.Rarity}')";//{chien.GetType}
+
+        SqlCommand cmd = new SqlCommand(query, conn);
+        cmd.ExecuteNonQuery();
+
+        conn.Close();
+    }
+
+    public void RecupData()
+    {
+        SqlConnection conn = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=Cours;User ID=Admin;Integrated Security=True;");
+
+        conn.Open();
+
+        string query = "SELECT * FROM Animals";
+
+        SqlCommand cmd = new SqlCommand(query, conn);
+        SqlDataReader dataReader = cmd.ExecuteReader();
+
+        while (dataReader.Read())
+        {
+            Console.WriteLine("ID : " + dataReader["ID"].ToString());
+            Console.WriteLine("Type : " + dataReader["Type"].ToString());
+            Console.WriteLine("Name : " + dataReader["Name"].ToString());
+            Console.WriteLine("Rarity : " + dataReader["Rarity"].ToString());
+            Console.WriteLine("-----------------------------------");
+
+        }
+
+        conn.Close();
     }
 }

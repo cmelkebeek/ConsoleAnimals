@@ -7,8 +7,14 @@ using System.Threading.Tasks;
 
 namespace ConsoleAnimals.Models
 {
-    public class Dragon : Animal, IPilotage
+    public class Dragon : Animal, IPilotage, IFly
     {
+
+        public void Voler()
+        {
+            Console.WriteLine("L'animal vol");
+        }
+
         public void Drive()
         {
             throw new NotImplementedException();
